@@ -8,8 +8,8 @@ export function Song(item) {
   this.release = item.release;
   this.mv = item.mv;
   this.collection = 'song';
-  this.save = function () {
-    saveDocument({
+  this.save = async function () {
+    await saveDocument({
       title: this.title,
       group: this.group,
       album: this.album,

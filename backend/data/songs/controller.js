@@ -1,21 +1,6 @@
 import { Song } from './model.js';
 
-// export function addSong(req, res) {
-//   const song = new Song({
-//     title: "90's Love",
-//     group: 'NCT U',
-//     album: 'NCT RESONANCE Pt. 2',
-//     genre: ['R&B', 'Hip Hop'],
-//     release: '11.2020',
-//     mv: 'https://www.youtube.com/watch?v=A5H8zBb3iao',
-//   });
-//   song.save();
-//   res.end();
-// }
-
-// - form version:
-
-export function addSong(req, res) {
+export async function addSong(req, res) {
   const songData = req.body;
   const song = new Song({
     title: songData.title,
@@ -26,6 +11,12 @@ export function addSong(req, res) {
     wins: songData.wins,
     mv: songData.mv,
   });
-  song.save();
-  res.end();
+  try {
+    await song.save();
+    console.log(`song '${songData.title}' was saved successfully.`);
+    res.end();
+  } catch (error) {
+    console.error('error while saving song:', error);
+    res.status(500).end();
+  }
 }

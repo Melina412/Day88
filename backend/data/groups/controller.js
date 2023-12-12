@@ -1,19 +1,6 @@
 import { Group } from './model.js';
 
-// export function addGroup(req, res) {
-//   const group = new Group({
-//     name: '',
-//     members: '',
-//     debut: '',
-//     label: '',
-//   });
-//   group.save();
-//   res.end();
-// }
-
-// - form version:
-
-export function addGroup(req, res) {
+export async function addGroup(req, res) {
   const groupData = req.body;
   const group = new Group({
     name: groupData.name,
@@ -21,6 +8,12 @@ export function addGroup(req, res) {
     debut: groupData.debut,
     label: groupData.label,
   });
-  group.save();
-  res.end();
+  try {
+    await group.save();
+    console.log(`group '${groupData.title}' was saved sucessfully.`);
+    res.end();
+  } catch (error) {
+    console.error('error while saving group:', error);
+    res.status(500).end();
+  }
 }

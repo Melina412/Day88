@@ -1,22 +1,6 @@
 import { Member } from './model.js';
 
-// export function addMember(req, res) {
-//   const member = new Member({
-//     name: '',
-//     group: '',
-//     position: [],
-//     birthday: '',
-//     mbti: '',
-//     zodiac: '',
-//     bias: true,
-//   });
-//   member.save();
-//   res.end();
-// }
-
-// - form version:
-
-export function addMember(req, res) {
+export async function addMember(req, res) {
   const memberData = req.body;
   const member = new Member({
     name: memberData.name,
@@ -27,6 +11,12 @@ export function addMember(req, res) {
     zodiac: memberData.zodiac,
     bias: Boolean(memberData.bias),
   });
-  member.save();
-  res.end();
+  try {
+    await member.save();
+    console.log(`member '${groupData.title}' was saved sucessfully.`);
+    res.end();
+  } catch (error) {
+    console.error('error while saving member:', error);
+    res.status(500).end();
+  }
 }

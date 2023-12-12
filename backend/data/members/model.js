@@ -9,8 +9,8 @@ export function Member(item) {
   this.zodiac = item.zodiac;
   this.bias = item.bias;
   this.collection = 'member';
-  this.save = function () {
-    saveDocument({
+  this.save = async function () {
+    await saveDocument({
       name: this.name,
       group: this.group,
       position: this.position,

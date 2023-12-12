@@ -6,8 +6,8 @@ export function Group(item) {
   this.debut = item.debut;
   this.label = item.label;
   this.collection = 'group';
-  this.save = function () {
-    saveDocument({
+  this.save = async function () {
+    await saveDocument({
       name: this.name,
       members: this.members,
       debut: this.debut,
